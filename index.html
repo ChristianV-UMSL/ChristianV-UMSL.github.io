@@ -3,23 +3,422 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your Name</title>
+  <meta name="description" content="Christian V. — personal portfolio and landing page.">
+  <title>Christian V. | Personal Site</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 0 20px;
-      line-height: 1.6;
-      color: #222;
+    :root {
+      --bg: #0b1120;
+      --bg-soft: #111a2e;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-hover: rgba(255, 255, 255, 0.09);
+      --text: #f8fafc;
+      --muted: #a8b3c7;
+      --accent: #60a5fa;
+      --accent-2: #a78bfa;
+      --border: rgba(255, 255, 255, 0.11);
+      --max-width: 1100px;
     }
 
-    h1 { color: #0969da; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(96, 165, 250, 0.16), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(167, 139, 250, 0.13), transparent 28%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(11, 17, 32, 0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      place-items: center;
+      padding: 90px 0 70px;
+    }
+
+    .hero-content { max-width: 800px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+      font-size: 0.88rem;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.2rem, 9vw, 6.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      max-width: 850px;
+    }
+
+    .gradient {
+      background: linear-gradient(110deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: 0.2s ease;
+      font-weight: 700;
+    }
+
+    .button.primary {
+      background: var(--text);
+      color: #0b1120;
+      border-color: transparent;
+    }
+
+    .button.secondary { background: rgba(255, 255, 255, 0.04); }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--card-hover);
+    }
+
+    .button.primary:hover { background: #dbeafe; }
+
+    /* Content sections */
+    section { padding: 70px 0; }
+
+    .section-heading { margin-bottom: 28px; }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--card);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+    }
+
+    .project-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .project-image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 14px;
+      border: 1px dashed rgba(255, 255, 255, 0.22);
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(167, 139, 250, 0.08));
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(96, 165, 250, 0.12);
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+    }
+
+    .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+    .card p { margin: 0; color: var(--muted); }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .about-main,
+    .about-side {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--card);
+    }
+
+    .about-main p,
+    .about-side p { color: var(--muted); }
+
+    .contact {
+      text-align: center;
+      padding-bottom: 90px;
+    }
+
+    .contact-box {
+      padding: 50px 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.10), rgba(167, 139, 250, 0.08));
+    }
+
+    .contact-box h2 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3rem); }
+    .contact-box p { color: var(--muted); margin: 0 auto 26px; max-width: 620px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 26px 0;
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; }
+      .nav-links { gap: 14px; }
+      .hero { min-height: auto; padding: 78px 0 55px; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 28px)); }
+      .nav-inner { min-height: 62px; }
+      .brand { font-size: 0.95rem; }
+      .nav-links { font-size: 0.85rem; gap: 12px; }
+      .nav-links a:nth-child(2) { display: none; }
+      h1 { font-size: clamp(3rem, 17vw, 4.4rem); }
+      section { padding: 55px 0; }
+    }
   </style>
 </head>
 <body>
-  <h1>Hi, I'm Christian Vazquez.</h1>
-  <p>Hello, Hello</p>
-  <p>Welcome to my personal landing page, hosted on GitHub Pages.</p>
+  <nav>
+    <div class="container nav-inner">
+      <a class="brand" href="#top">Christian V.</a>
+      <div class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container hero-content">
+        <div class="eyebrow">Welcome to my corner of the internet</div>
+        <h1>Hi, I'm <span class="gradient">Christian V.</span></h1>
+        <p>
+          Welcome to my personal landing page. I'm building my skills, exploring technology,
+          and sharing the things I'm working on along the way.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#projects">See what I'm working on</a>
+          <a class="button secondary" href="#about">Learn more about me</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading">
+          <h2>A little about me</h2>
+          <p>I was born in St. Louis and have lived here my whole life. I like playing 
+            video games and starting tech projects in my free time. Anything from basic
+             repair and upgrades to 3d printing useful things.</p>
+        </div>
+
+        <div class="about">
+          <div class="about-main">
+            <h3>Curious, technical, and always learning.</h3>
+            <p>
+              I'm currently studying Electrical engineering at UMSL. I was inspired to pursue this career from my enjoyment and facination 
+              with soldering, digital logic and the basics of how our devices function.
+              I enjoy collecting older consoles when I find them at a good price, mainly gameboys and different nintendo ds/3ds models.
+
+            </p>
+          </div>
+          <div class="about-side">
+            <h3>What I'm into</h3>
+            <p>Technology · Engineering · Creative projects · repair · soldering · digital logic · restoration · 3D printing</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Things I'm working on</h2>
+          <p>Use these cards for GitHub projects, school work, hobbies, or anything else you want to showcase.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <!-- Replace project1.jpg with your own image file -->
+            <img class="project-image" src="images/gba.webp" alt="Game Boy Advance screen and battery upgrade">
+            <div class="card-icon">⌘</div>
+            <h3>Gameboy advance screen and battery upgrade</h3>
+            <p>I added quality of life upgrades such as a rechargable battery and a 
+              backlit screen to breathe new life into an old gameboy advance I purchased. 
+              This project involved soldering wires between the backlit screen and the gameboy's
+               motherboard in order to enable control over the screen brightness.  </p>
+          </article>
+          <article class="card">
+            <!-- Replace project2.jpg with your own image file -->
+            <img class="project-image" src="images/imac.webp" alt="2012 iMac running Linux Mint">
+            <div class="card-icon">⚙</div>
+            <h3>Learning about linux mint</h3>
+            <p>I received an old Imac from 2012 and in an attempt to keep it out of the piles of e-waste,
+               I decided to install linux mint os. The results were fairly pleasant, being capable of runnning 
+               older video games and only stuttering when several tabs are open, something I believe a ram upgrade could remedy. Something like this 
+               is perfectly usable for basic web browsing and productivity. I believe it is also capable of being used as a self hosted media server.
+            </p>
+          </article>
+          <article class="card">
+            <div class="project-image placeholder-image" role="img" aria-label="Add a photo of the Toshiba laptop restoration here">
+              <span><images>
+              <laptop class="webp"></laptop></span>
+            </div>
+            <div class="card-icon">✦</div>
+            <h3>Toshiba laptop restoration</h3>
+            <p>I repaired and upgraded an old touch screen laptop for a relative after their
+              previous laptop stopped getting supported for updates. The work done on the toshiba 
+              laptop included a screen replacement, a ram upgrade, and a battery replacement. After the hardware fixes
+              were completed, I cloned the contents of the old hard drive to a SATA SSD to speed up start times.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2>Let's connect.</h2>
+          <p>Add your preferred contact method here—email, GitHub, LinkedIn, or another profile.</p>
+          <div class="actions" style="justify-content:center;">
+            <a class="button primary" href="mailto:cvhd6@umsystem.com">Email me</a>
+            <a class="button secondary" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 Christian V.</span>
+      <span>Built with HTML & CSS.</span>
+    </div>
+  </footer>
 </body>
 </html>
